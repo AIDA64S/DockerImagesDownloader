@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       image_name:
-        description: "ubuntu:22.04"
+        description: "镜像完整名称ubuntu:22.04"
         required: true
         default: "ubuntu:22.04"
       arch:
-        description: "linux/arm64"
+        description: "系统架构，默认linux/arm64"
         required: true
         default: "linux/arm64"
 jobs:
