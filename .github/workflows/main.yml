@@ -4,11 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       image_name:
-        description: "镜像完整名称ubuntu:22.04"
+        description: "镜像名称，默认'ubuntu'"
         required: true
-        default: "ubuntu:22.04"
+        default: "ubuntu"
+      image_tag:
+        description: "镜像tag，默认'latest'"
+        required: true
+        default: "latest"
       arch:
-        description: "系统架构，默认linux/arm64"
+        description: "系统架构，默认'linux/arm64'"
         required: true
         default: "linux/arm64"
 jobs:
@@ -23,12 +27,12 @@ jobs:
 
       - name: Pull & Save Docker Image
         run: |
-          echo "拉取镜像: ${{ github.event.inputs.image_name }} (架构: ${{ github.event.inputs.arch }})"
-          docker pull --platform ${{ github.event.inputs.arch }} ${{ github.event.inputs.image_name }}
-          docker save ${{ github.event.inputs.image_name }} -o ubuntu_2204_arm.tar
+          echo "拉取镜像: ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} (架构: ${{ github.event.inputs.arch }})"
+          docker pull --platform ${{ github.event.inputs.arch }} ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
+          docker save ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} -o ${{ github.event.inputs.image_name }}-${{ github.event.inputs.image_tag }}.tar
 
       - name: Upload TAR as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: docker-image-tar
-          path: ubuntu_2204_arm.tar
+          path: ${{ github.event.inputs.image_name }}-${{ github.event.inputs.image_tag }}.tar
