@@ -29,10 +29,10 @@ jobs:
         run: |
           echo "拉取镜像: ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} (架构: ${{ github.event.inputs.arch }})"
           docker pull --platform ${{ github.event.inputs.arch }} ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
-          docker save ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} -o ${{ github.event.inputs.image_name }}-${{ github.event.inputs.image_tag }}.tar
+          docker save -o images.tar ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
 
       - name: Upload TAR as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.event.inputs.image_name }}-${{ github.event.inputs.image_tag }}
-          path: ${{ github.event.inputs.image_name }}-${{ github.event.inputs.image_tag }}.tar
+          name: docker-images-tar
+          path: images.tar
