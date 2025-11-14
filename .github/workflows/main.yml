@@ -28,6 +28,10 @@ jobs:
           sudo rm -rf /usr/share/kotlin
           sudo rm -rf /usr/share/emscripten
           sudo rm -rf /usr/share/doc/*
+          sudo rm -rf /usr/share/kotlinc
+          sudo rm -rf /var/lib/mecab
+          sudo rm -rf /usr/lib/snapd
+          sudo rm -rf /usr/share/man
           sudo rm -rf /opt/ghc
           sudo rm -rf /usr/local/share/boost
           sudo rm -rf /usr/local/share/powershell
@@ -84,10 +88,10 @@ jobs:
           echo "拉取镜像: ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} (架构: ${{ github.event.inputs.arch }})"
           docker pull --platform ${{ github.event.inputs.arch }} ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
           docker images | grep ${{ github.event.inputs.image_name }}
-          docker save ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} | gzip > image.tar.gz
+          docker save ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} | zstd -T0 -19 -o image.tar.zst
 
       - name: Upload TAR as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: docker-images-tar
-          path: image.tar.gz
+          path: image.tar.zst
