@@ -26,6 +26,21 @@ jobs:
           sudo rm -rf /opt/ghc
           sudo rm -rf /usr/local/share/boost
           sudo rm -rf /usr/local/share/powershell
+          sudo rm -rf /usr/local/share/chromium
+          sudo rm -rf /usr/local/share/firefox
+          sudo rm -rf /usr/local/lib/heroku
+          sudo rm -rf /usr/local/lib/node_modules
+          sudo rm -rf /usr/local/share/gradle
+          sudo rm -rf /usr/lib/jvm
+          sudo rm -rf /usr/local/azure-cli
+          sudo rm -rf /opt/microsoft
+          sudo rm -rf /usr/share/miniconda
+          sudo rm -rf /usr/share/miniconda
+          sudo rm -rf /var/lib/apt/lists/*
+          sudo rm -rf /var/cache/apt/archives/*
+          sudo rm -rf ~/.cache/*
+          sudo docker system prune -af || true
+          sudo docker builder prune -af || true
           df -h
 
       - name: Set up QEMU for multi-arch
