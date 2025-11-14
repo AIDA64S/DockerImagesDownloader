@@ -45,7 +45,6 @@ jobs:
           sudo docker system prune -af || true
           sudo docker builder prune -af || true
           df -h
-          sudo du -h --max-depth=3 / | sort -rh | head -n 10
 
       - name: Set up QEMU for multi-arch
         uses: docker/setup-qemu-action@v3
