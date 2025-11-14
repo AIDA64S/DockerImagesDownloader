@@ -44,6 +44,7 @@ jobs:
           sudo rm -rf /opt/hostedtoolcache
           sudo docker system prune -af || true
           sudo docker builder prune -af || true
+          sudo du -h --max-depth=4 / | sort -rh | head -n 10
           df -h
 
       - name: Set up QEMU for multi-arch
@@ -56,6 +57,7 @@ jobs:
         run: |
           echo "拉取镜像: ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} (架构: ${{ github.event.inputs.arch }})"
           docker pull --platform ${{ github.event.inputs.arch }} ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
+          docker images | grep ${{ github.event.inputs.image_name }}
           docker save -o images.tar ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
 
       - name: Upload TAR as Artifact
