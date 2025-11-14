@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: clean disk space
         run: |
-          sudo du -h --max-depth=3 | sort -rh | head -n 10
+          sudo du -h --max-depth=3 / | sort -rh | head -n 10
           sudo rm -rf /usr/local/lib/android
           sudo rm -rf /usr/share/donnet
           sudo rm -rf /opt/ghc
