@@ -18,7 +18,8 @@ on:
 jobs:
   save-image:
     runs-on: ubuntu-latest
-      - name: Set up QEMU for multi-arch
+      steps:
+      - name: Setup QEMU for multi-arch
         uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
