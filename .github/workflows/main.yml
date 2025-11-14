@@ -64,6 +64,10 @@ jobs:
           sudo rm -rf /usr/local/aws-sam-cli
           sudo rm -rf /var/lib/mysql
           sudo rm -rf /opt/pipx
+          sudo rm -rf /usr/share/gradle-9.2.0
+          sudo rm -rf /usr/src/linux-azure-6.11-headers-6.11.0-1018
+          sudo rm -rf /usr/local/share/vcpkg
+          sudo rm -rf /usr/local/n
           sudo docker system prune -af || true
           sudo docker builder prune -af || true
           sudo du -h --max-depth=4 / | sort -rh | head -n 40
@@ -80,10 +84,10 @@ jobs:
           echo "拉取镜像: ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} (架构: ${{ github.event.inputs.arch }})"
           docker pull --platform ${{ github.event.inputs.arch }} ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
           docker images | grep ${{ github.event.inputs.image_name }}
-          docker save -o images.tar ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
+          docker save ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} | gzip > image.tar.gz
 
       - name: Upload TAR as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: docker-images-tar
-          path: images.tar
+          path: image.tar.gz
