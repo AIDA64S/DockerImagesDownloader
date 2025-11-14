@@ -42,7 +42,6 @@ jobs:
           sudo rm -rf ~/.cache/*
           sudo rm -rf /usr/local/.ghcup
           sudo rm -rf /opt/hostedtoolcache
-          sudo rm -rf /usr/lib/x86_64-linux-gnu
           sudo docker system prune -af || true
           sudo docker builder prune -af || true
           sudo du -h --max-depth=4 / | sort -rh | head -n 20
