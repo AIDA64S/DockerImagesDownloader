@@ -18,8 +18,8 @@ on:
 jobs:
   save-image:
     runs-on: ubuntu-latest
-      steps:
-      - name: Setup QEMU for multi-arch
+    steps:
+      - name: Set up QEMU for multi-arch
         uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
@@ -29,10 +29,10 @@ jobs:
         run: |
           echo "拉取镜像: ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} (架构: ${{ github.event.inputs.arch }})"
           docker pull --platform ${{ github.event.inputs.arch }} ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
-          docker save ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} | zstd -T0 -19 -o image.tar.zst
+          docker save -o images.tar ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
 
       - name: Upload TAR as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: docker-images-tar
-          path: image.tar.zst
+          path: images.tar
