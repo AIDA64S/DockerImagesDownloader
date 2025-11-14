@@ -18,65 +18,6 @@ on:
 jobs:
   save-image:
     runs-on: ubuntu-latest
-    steps:
-      - name: clean disk space
-        run: |
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/share/swift
-          sudo rm -rf /usr/share/java
-          sudo rm -rf /usr/share/kotlin
-          sudo rm -rf /usr/share/emscripten
-          sudo rm -rf /usr/share/doc/*
-          sudo rm -rf /usr/share/kotlinc
-          sudo rm -rf /var/lib/mecab
-          sudo rm -rf /usr/lib/snapd
-          sudo rm -rf /usr/share/man
-          sudo rm -rf /opt/ghc
-          sudo rm -rf /usr/local/share/boost
-          sudo rm -rf /usr/local/share/powershell
-          sudo rm -rf /usr/local/share/chromium
-          sudo rm -rf /usr/local/share/firefox
-          sudo rm -rf /usr/local/lib/heroku
-          sudo rm -rf /usr/local/lib/node_modules
-          sudo rm -rf /usr/local/share/gradle
-          sudo rm -rf /usr/lib/jvm
-          sudo rm -rf /usr/local/azure-cli
-          sudo rm -rf /opt/microsoft
-          sudo rm -rf /usr/share/miniconda
-          sudo rm -rf /usr/share/miniconda
-          sudo rm -rf /var/lib/apt/lists/*
-          sudo rm -rf /var/cache/apt/archives/*
-          sudo rm -rf ~/.cache/*
-          sudo rm -rf /usr/local/.ghcup
-          sudo rm -rf /opt/hostedtoolcache
-          sudo rm -rf /home/packer
-          sudo rm -rf /usr/lib/llvm-18
-          sudo rm -rf /usr/lib/llvm-16
-          sudo rm -rf /usr/lib/llvm-17
-          sudo rm -rf /usr/lib/firefox
-          sudo rm -rf /usr/lib/firefox
-          sudo rm -rf /usr/share/az_12.5.0
-          sudo rm -rf /opt/az
-          sudo rm -rf /opt/google
-          sudo rm -rf /etc/skel
-          sudo rm -rf /usr/local/julia1.12.1
-          sudo rm -rf /usr/lib/google-cloud-sdk
-          sudo rm -rf /usr/local/aws-cli
-          sudo rm -rf /opt/pipx
-          sudo rm -rf /usr/lib/python3
-          sudo rm -rf /usr/local/aws-sam-cli
-          sudo rm -rf /var/lib/mysql
-          sudo rm -rf /opt/pipx
-          sudo rm -rf /usr/share/gradle-9.2.0
-          sudo rm -rf /usr/src/linux-azure-6.11-headers-6.11.0-1018
-          sudo rm -rf /usr/local/share/vcpkg
-          sudo rm -rf /usr/local/n
-          sudo docker system prune -af || true
-          sudo docker builder prune -af || true
-          sudo du -h --max-depth=4 / | sort -rh | head -n 40
-          df -h
-
       - name: Set up QEMU for multi-arch
         uses: docker/setup-qemu-action@v3
 
@@ -87,7 +28,6 @@ jobs:
         run: |
           echo "拉取镜像: ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} (架构: ${{ github.event.inputs.arch }})"
           docker pull --platform ${{ github.event.inputs.arch }} ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
-          docker images | grep ${{ github.event.inputs.image_name }}
           docker save ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} | zstd -T0 -19 -o image.tar.zst
 
       - name: Upload TAR as Artifact
