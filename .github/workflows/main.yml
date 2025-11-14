@@ -24,6 +24,10 @@ jobs:
           sudo rm -rf /usr/local/lib/android
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /usr/share/swift
+          sudo rm -rf /usr/share/java
+          sudo rm -rf /usr/share/kotlin
+          sudo rm -rf /usr/share/emscripten
+          sudo rm -rf /usr/share/doc/*
           sudo rm -rf /opt/ghc
           sudo rm -rf /usr/local/share/boost
           sudo rm -rf /usr/local/share/powershell
@@ -42,9 +46,15 @@ jobs:
           sudo rm -rf ~/.cache/*
           sudo rm -rf /usr/local/.ghcup
           sudo rm -rf /opt/hostedtoolcache
+          sudo rm -rf /home/packer
+          sudo rm -rf /home/runner/actions-runner
+          sudo rm -rf /usr/lib/llvm-18
+          sudo rm -rf /etc/skel
+          sudo rm -rf /usr/local/julia1.12.1
+          sudo rm -rf /usr/lib/google-cloud-sdk
           sudo docker system prune -af || true
           sudo docker builder prune -af || true
-          sudo du -h --max-depth=4 / | sort -rh | head -n 20
+          sudo du -h --max-depth=4 / | sort -rh | head -n 40
           df -h
 
       - name: Set up QEMU for multi-arch
