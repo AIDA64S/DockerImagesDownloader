@@ -47,8 +47,14 @@ jobs:
           sudo rm -rf /usr/local/.ghcup
           sudo rm -rf /opt/hostedtoolcache
           sudo rm -rf /home/packer
-          sudo rm -rf /home/runner/actions-runner
           sudo rm -rf /usr/lib/llvm-18
+          sudo rm -rf /usr/lib/llvm-16
+          sudo rm -rf /usr/lib/llvm-17
+          sudo rm -rf /usr/lib/firefox
+          /usr/lib/firefox
+          /usr/share/az_12.5.0
+          /opt/az
+          /opt/google
           sudo rm -rf /etc/skel
           sudo rm -rf /usr/local/julia1.12.1
           sudo rm -rf /usr/lib/google-cloud-sdk
