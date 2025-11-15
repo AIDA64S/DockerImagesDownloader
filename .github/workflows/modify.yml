@@ -1,4 +1,4 @@
-name: Save Docker Image as TAR (Multi-Arch)
+name: Save Docker Image as TAR as Name(Multi-Arch)
 
 on:
   workflow_dispatch:
