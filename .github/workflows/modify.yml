@@ -1,0 +1,43 @@
+name: Save Docker Image as TAR (Multi-Arch)
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_name:
+        description: "镜像名称，默认'ubuntu'"
+        required: true
+        default: "ubuntu"
+      image_tag:
+        description: "镜像tag，默认'latest'"
+        required: true
+        default: "latest"
+      arch:
+        description: "系统架构，默认'linux/arm64'"
+        required: true
+        default: "linux/arm64"
+      new_name:
+        description: "新名字，默认'ubuntu:22.04'"
+        required: true
+        default: "ubuntu:22.04"
+jobs:
+  save-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up QEMU for multi-arch
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Pull & Save Docker Image
+        run: |
+          echo "拉取镜像: ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} (架构: ${{ github.event.inputs.arch }})"
+          docker pull --platform ${{ github.event.inputs.arch }} ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
+          docker tag ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} ${{ github.event.inputs.new_name }}
+          docker save -o images.tar ${{ github.event.inputs.new_name }}
+
+      - name: Upload TAR as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-images-tar
+          path: images.tar
