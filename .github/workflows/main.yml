@@ -5,7 +5,7 @@ on:
     inputs:
       image_domain:
         description: "镜像仓库"
-        required: true
+        required: false
         default: "docker.io"
       image_name:
         description: "镜像名称"
@@ -30,7 +30,11 @@ jobs:
       - name: Pull & Save Specific Arch Image
         id: save_step
         run: |
-          FULL_IMAGE="${{ github.event.inputs.image_domain }}/${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}"
+          DOMAIN="${{ github.event.inputs.image_domain }}"
+          if [ -n "$DOMAIN" ]; then
+            FULL_IMAGE="${{ github.event.inputs.image_domain }}/${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}"
+          else
+            FULL_IMAGE="${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}"
           ARCH="${{ github.event.inputs.arch }}"
           CLEAN_ARCH=$(echo "$ARCH" | sed 's|linux/||')
           ATRIFACT_NAME="${{ github.event.inputs.image_name }}_${{ github.event.inputs.image_tag }}_${CLEAN_ARCH}"
