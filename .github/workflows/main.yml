@@ -1,4 +1,4 @@
-name: Save Docker Image as TAR (Multi-Arch)
+name: Save Docker Image (Multi-Arch)
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ on:
         required: true
         default: "latest"
       arch:
-        description: "系统架构(如arm64, amd64)"
+        description: "系统架构(支持arm64, amd64)"
         required: true
         default: "arm64"
 
