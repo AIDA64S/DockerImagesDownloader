@@ -27,8 +27,9 @@ jobs:
 
       - name: Pull & Save Docker Image
         run: |
-          echo "拉取镜像: ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} (架构: ${{ github.event.inputs.arch }})"
-          docker pull --platform ${{ github.event.inputs.arch }} ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
+          docker buildx create --name multiarch-builder --use
+          docker buildx inspect --bootstrap
+          docker buildx build --platform ${{ github.event.inputs.arch }} -t ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} --load ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
           docker inspect ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }} | grep -i architecture
           docker save -o images.tar ${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
 
