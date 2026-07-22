@@ -6,7 +6,7 @@ on:
       image_domain:
         description: "镜像仓库，默认'docker.io'"
         required: true
-        default: "ubuntu"
+        default: "docker.io"
       image_name:
         description: "镜像名称，默认'ubuntu'"
         required: true
