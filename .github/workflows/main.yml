@@ -37,7 +37,7 @@ jobs:
           FILENAME="${{ github.event.inputs.image_name }}_${{ github.event.inputs.image_tag }}_${CLEAN_ARCH}.tar"
           echo "正在抓取架构 [$CLEAN_ARCH] 的镜像: $FULL_IMAGE"
           echo "输出文件名: $FILENAME"
-          skopeo copy --override-os linux --override-arch "$CLEAN_ARCH" docker://$FULL_IMAGE docker-archive:${TAR_FILENAME}:$FULL_IMAGE
+          skopeo copy --override-os linux --override-arch "$CLEAN_ARCH" docker://$FULL_IMAGE docker-archive:${FILENAME}:$FULL_IMAGE
           echo "filename=${FILENAME}" >> $GITHUB_OUTPUT
           echo "artifact_name=${ATRIFACT_NAME}" >> $GITHUB_OUTPUT
 
