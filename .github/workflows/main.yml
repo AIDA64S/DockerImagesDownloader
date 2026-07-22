@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Skopeo
-        run: apt-get install -y skopeo
+        run: sudo apt-get install -y skopeo
 
       - name: Pull & Save Specific Arch Image
         id: save_step
