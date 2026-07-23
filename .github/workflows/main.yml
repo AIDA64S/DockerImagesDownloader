@@ -35,6 +35,7 @@ jobs:
             FULL_IMAGE="${{ github.event.inputs.image_domain }}/${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}"
           else
             FULL_IMAGE="${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}"
+          fi
           ARCH="${{ github.event.inputs.arch }}"
           CLEAN_ARCH=$(echo "$ARCH" | sed 's|linux/||')
           ATRIFACT_NAME="${{ github.event.inputs.image_name }}_${{ github.event.inputs.image_tag }}_${CLEAN_ARCH}"
